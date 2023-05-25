@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<HomeCubit>(
           create: (context) => di<HomeCubit>()
             ..getListOfCategories()
-            ..getProductsListWithLimit(),
+            ..getProductsListWithLimit()
         ),
       ],
       child: MaterialApp(

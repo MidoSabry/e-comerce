@@ -20,11 +20,58 @@ class HomeRepositoryImpl extends HomeRepository {
     return categoriesList;
   }
 
+///////////////////get products with Limit///////////////////////////
   @override
   Future<List<Products>> getProductsWithLimit(int limit) async {
     var result;
     result =
         await DioHelper.getData(path: '${EndPoints.getProducts}?limit=$limit');
+
+    List<dynamic> resultData = result.data;
+
+    List<Products> productList =
+        resultData.map((item) => Products.fromJson(item)).toList();
+
+    return productList;
+  }
+
+  /////////////////get all products////////////////////////////////////
+  @override
+  Future<List<Products>> getAllProducts() async {
+    var result;
+    result = await DioHelper.getData(path: EndPoints.getProducts);
+
+    List<dynamic> resultData = result.data;
+
+    List<Products> productList =
+        resultData.map((item) => Products.fromJson(item)).toList();
+
+    return productList;
+  }
+
+  /////////////////////Get all products of each category///////////////
+
+  @override
+  Future<List<Products>> getProductsOfEachCategory(String categoryName) async {
+    var result;
+    result = await DioHelper.getData(
+        path: '${EndPoints.getProductsOfEachCategory}/$categoryName');
+
+    List<dynamic> resultData = result.data;
+
+    List<Products> productList =
+        resultData.map((item) => Products.fromJson(item)).toList();
+
+    return productList;
+  }
+
+  ////////////////get products after sort/////////////////////
+  @override
+  Future<List<Products>> getProductsAfterSort(
+      String url, String sortKind) async {
+    var result;
+    print('$url?sort=$sortKind');
+    result = await DioHelper.getData(path: '$url?sort=$sortKind');
 
     List<dynamic> resultData = result.data;
 

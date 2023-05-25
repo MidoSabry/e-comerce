@@ -1,7 +1,6 @@
 import 'package:flutter/src/widgets/framework.dart';
 
 class AppStrings {
-  
   static const String appName = 'e-Commerce';
   static const String fontFamily = 'Poppins';
   static const String joinScquad = 'join Squad';
@@ -14,9 +13,11 @@ class AppStrings {
   static const String onboard2 = 'Onboard two';
   static const String onboard3 = 'Onboard three';
 
-  static const String lourphim = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
+  static const String lourphim =
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
 
-  static const loginMessage = "Login to your account and let's get your daily activites done!";
+  static const loginMessage =
+      "Login to your account and let's get your daily activites done!";
   static const String emailAddress = 'Email Address';
   static const String password = 'Password';
   static const String confirmPassword = 'Confirm password';
@@ -30,5 +31,14 @@ class AppStrings {
 
   static String suggestionForYou = "Suggestion for you";
   static String seeAll = "See All";
-  
+
+  static String productsIsNotAvailableNow = "Products is not available now!";
+
+  static const defoult_sort = "Default sort";
+  static const latest_sort = "Latest sort";
+  static const price_low_sort = "Price low to high";
+  static const price_high_sort = "Price high to low";
+
+  static const sort_txt = "Sort";
+  static const filter_txt = "Filter";
 }

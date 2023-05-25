@@ -3,12 +3,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecomerce/core/styles/customTextFormStyle.dart';
 import 'package:ecomerce/core/utils/app_colors.dart';
 import 'package:ecomerce/features/home/presentation/cubit/cubit/home_cubit.dart';
+import 'package:ecomerce/features/home/presentation/screens/all_products_screen.dart';
+import 'package:ecomerce/features/home/presentation/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/di.dart';
 import '../widgets/custom_single_product_widget.dart';
@@ -25,33 +28,7 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: 286.w,
-                height: 48.h,
-                margin: EdgeInsets.only(top: 20.h),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.lotionColor,
-                  border: Border.all(
-                    color: AppColors.lotionColor,
-                    width: 1,
-                  ),
-                ),
-                child: TextFormField(
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: AppStrings.search,
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        size: 30,
-                        color: AppColors.searchIconColor,
-                      ),
-                    ),
-                    onChanged: (index) {
-                      // di<SignupCoachCubit>().currencySearch(index);
-                    }),
-              ),
+              CustomAppBarWidget(),
               SizedBox(
                 height: 20.h,
               ),
@@ -74,9 +51,9 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, i) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: GestureDetector(
+                            child: GestureDetector(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
                                 child: Container(
                                   color: AppColors.primaryColor,
                                   width: 200.w,
@@ -91,8 +68,20 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                onTap: () {},
                               ),
+                              onTap: () {
+                                di<HomeCubit>().getProductsOfEachCategory(
+                                    di<HomeCubit>()
+                                        .categoriesList[i]
+                                        .toString());
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.productsList,
+                                  arguments: di<HomeCubit>()
+                                      .categoriesList[i]
+                                      .toString(),
+                                );
+                              },
                             ),
                           );
                         },
@@ -114,10 +103,20 @@ class HomeScreen extends StatelessWidget {
                       style:
                           textButtonStyle.copyWith(fontWeight: FontWeight.w600),
                     ),
-                    Text(AppStrings.seeAll,
-                        style: textButtonStyle.copyWith(
-                          decoration: TextDecoration.underline,
-                        ))
+                    GestureDetector(
+                      child: Text(AppStrings.seeAll,
+                          style: textButtonStyle.copyWith(
+                            decoration: TextDecoration.underline,
+                          )),
+                      onTap: () {
+                        di<HomeCubit>().getAllProductsList();
+                        Navigator.pushNamed(
+                          context,
+                          Routes.productsList,
+                          arguments: 'All products',
+                        );
+                      },
+                    )
                   ],
                 ),
               ),
@@ -137,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                       child: ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: di<HomeCubit>().productList.length,
+                        itemCount: di<HomeCubit>().limetedProductList.length,
                         itemBuilder: (context, i) {
                           return Padding(
                             padding: const EdgeInsets.all(5),
@@ -157,7 +156,8 @@ class HomeScreen extends StatelessWidget {
                                     width: 150.w,
                                     height: 350.h,
                                     child: CustomSingleProductWidget(
-                                      itemsList: di<HomeCubit>().productList,
+                                      itemsList:
+                                          di<HomeCubit>().limetedProductList,
                                       index: i,
                                     )),
                                 onTap: () {},

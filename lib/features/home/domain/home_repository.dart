@@ -5,4 +5,10 @@ abstract class HomeRepository {
 
   Future<List<Products>> getProductsWithLimit(int limit);
 
+  Future<List<Products>> getAllProducts();
+
+  Future<List<Products>> getProductsOfEachCategory(String categoryName);
+
+  Future<List<Products>> getProductsAfterSort(String url,String sortKind);
+
 }

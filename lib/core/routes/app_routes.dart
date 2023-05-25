@@ -1,3 +1,5 @@
+import 'package:ecomerce/features/home/data/repositories/models/products.dart';
+import 'package:ecomerce/features/home/presentation/screens/all_products_screen.dart';
 import 'package:ecomerce/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -5,13 +7,13 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/onboarding_pageview.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 
-
 class Routes {
   static const String initialRoute = '/';
   static const String onboarding = '/onboarding';
   static const String splash = '/splash';
   static const String login = '/login';
   static const String home = '/home';
+  static const String productsList = '/productsList';
 }
 
 class AppRoutes {
@@ -41,7 +43,11 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) {
           return HomeScreen();
         });
-     
+      case Routes.productsList:
+        return MaterialPageRoute(builder: (context) {
+          var screenName = routeSettings.arguments as String;
+          return AllProductsScreen(nameOfScreen: screenName);
+        });
     }
   }
 }

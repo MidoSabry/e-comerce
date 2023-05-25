@@ -12,3 +12,10 @@ class ErrorToGetCategoriesList extends HomeState {}
 class LoadingGetProductsList extends HomeState{}
 class SuccessGetProductsList extends HomeState{}
 class ErrorToGetProductsList extends HomeState{}
+
+class ChangeSelectNumFromDropDownList extends HomeState{}
+class StartChangeSelectNumFromDropDownList extends HomeState{}
+
+class LoadingSearch extends HomeState{}
+class SuccessSearch extends HomeState{}
+

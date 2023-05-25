@@ -3,6 +3,7 @@ import 'package:ecomerce/core/styles/customTextFormStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/shared/widgets/custom_title.dart';
@@ -25,7 +26,9 @@ class _CustomSingleProductWidgetState extends State<CustomSingleProductWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          print("here");
+        },
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Container(
@@ -68,20 +71,35 @@ class _CustomSingleProductWidgetState extends State<CustomSingleProductWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(35),
+                  padding: const EdgeInsets.all(0),
+                  child: ClipPath(
+                    clipper: StarClipper(8),
+                    child: Container(
+                      margin: EdgeInsets.all(0),
+                      padding: EdgeInsets.all(13),
+                      // decoration: BoxDecoration(
+                      //     color: Colors.red, shape: BoxShape.circle),
+                      color: AppColors.primaryColor,
+                      child: Text(
+                        widget.itemsList[widget.index].rating!.rate.toString(),
+                        style:
+                            btnTextStyle.copyWith(color: AppColors.whiteColor),
+                      ),
                     ),
-                    child: Center(
-                        child: Text(
-                      widget.itemsList[widget.index].rating!.rate.toString(),
-                      style: btnTextStyle.copyWith(color: AppColors.whiteColor),
-                    ))),
-              )
+                  ))
+              // Container(
+              //     height: 35,
+              //     width: 35,
+              //     decoration: BoxDecoration(
+              //       color: Colors.red,
+              //       borderRadius: BorderRadius.circular(35),
+              //     ),
+              //     child: Center(
+              //         child: Text(
+              //       widget.itemsList[widget.index].rating!.rate.toString(),
+              //       style: btnTextStyle.copyWith(color: AppColors.whiteColor),
+              //     ))),
+              // )
             ],
           )
         ],
@@ -113,7 +131,10 @@ class _CustomSingleProductWidgetState extends State<CustomSingleProductWidget> {
               alignment: Alignment.topRight,
               child: InkWell(
                   child: iconIsFav
-                      ? const Icon(Icons.favorite)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: AppColors.validateTextColorRed,
+                        )
                       : const Icon(Icons.favorite_outline),
                   onTap: () {
                     setState(() {
