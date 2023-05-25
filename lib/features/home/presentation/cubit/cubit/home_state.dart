@@ -19,3 +19,8 @@ class StartChangeSelectNumFromDropDownList extends HomeState{}
 class LoadingSearch extends HomeState{}
 class SuccessSearch extends HomeState{}
 
+
+class LoadingGetSingleProductData extends HomeState{}
+class SuccessGetSingleProductData extends HomeState{}
+class ErrorToGetSingleProductData extends HomeState{}
+

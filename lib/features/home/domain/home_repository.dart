@@ -11,4 +11,6 @@ abstract class HomeRepository {
 
   Future<List<Products>> getProductsAfterSort(String url,String sortKind);
 
+  Future<Products> getSingleProductData(int productId);
+
 }

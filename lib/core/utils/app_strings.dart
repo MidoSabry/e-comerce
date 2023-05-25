@@ -41,4 +41,6 @@ class AppStrings {
 
   static const sort_txt = "Sort";
   static const filter_txt = "Filter";
+
+  static const rating = "Rating";
 }

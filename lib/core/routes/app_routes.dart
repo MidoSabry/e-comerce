@@ -1,6 +1,7 @@
 import 'package:ecomerce/features/home/data/repositories/models/products.dart';
 import 'package:ecomerce/features/home/presentation/screens/all_products_screen.dart';
 import 'package:ecomerce/features/home/presentation/screens/home_screen.dart';
+import 'package:ecomerce/features/home/presentation/screens/single_product_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
@@ -14,6 +15,7 @@ class Routes {
   static const String login = '/login';
   static const String home = '/home';
   static const String productsList = '/productsList';
+  static const String singleProduct = '/singleProduct';
 }
 
 class AppRoutes {
@@ -47,6 +49,11 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) {
           var screenName = routeSettings.arguments as String;
           return AllProductsScreen(nameOfScreen: screenName);
+        });
+      case Routes.singleProduct:
+        return MaterialPageRoute(builder: (context) {
+          var productId = routeSettings.arguments as int;
+          return SingleProductScreen(productId: productId);
         });
     }
   }

@@ -80,4 +80,17 @@ class HomeRepositoryImpl extends HomeRepository {
 
     return productList;
   }
+
+  ///////////////////get Single product data///////////////////////
+
+  @override
+  Future<Products> getSingleProductData(int productId) async {
+    var result;
+    result =
+        await DioHelper.getData(path: '${EndPoints.getProducts}/$productId');
+
+    Products product = Products.fromJson(result.data);
+
+    return product;
+  }
 }

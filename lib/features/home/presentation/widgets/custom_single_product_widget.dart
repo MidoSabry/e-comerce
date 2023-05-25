@@ -1,13 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecomerce/core/styles/customTextFormStyle.dart';
+import 'package:ecomerce/features/home/presentation/cubit/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/routes/app_routes.dart';
 import '../../../../core/shared/widgets/custom_title.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/di.dart';
 import '../../data/repositories/models/products.dart';
 
 class CustomSingleProductWidget extends StatefulWidget {
@@ -25,29 +29,45 @@ class _CustomSingleProductWidgetState extends State<CustomSingleProductWidget> {
   bool iconIsFav = false;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          print("here");
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Container(
-            // color: Color(0x15527148),
-            // child: Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildProductImage(context, widget.itemsList[widget.index]),
-                SizedBox(
-                  height: 5.h,
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {
+        // TODO: implement listener
+        if(state is SuccessGetSingleProductData){
+          
+        }
+      },
+      builder: (context, state) {
+        return GestureDetector(
+            onTap: () {
+              // print(widget.itemsList[widget.index].id);
+              Navigator.pushNamed(
+                context,
+                arguments: widget.itemsList[widget.index].id!,
+                Routes.singleProduct,
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Container(
+                // color: Color(0x15527148),
+                // child: Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildProductImage(context, widget.itemsList[widget.index]),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    buildProductDetails(
+                        context, widget.itemsList[widget.index]),
+                  ],
                 ),
-                buildProductDetails(context, widget.itemsList[widget.index]),
-              ],
-            ),
-            // ),
-          ),
-        ));
+                // ),
+              ),
+            ));
+      },
+    );
   }
 
   /////Image/////////////

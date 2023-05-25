@@ -14,7 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
   HomeRepositoryImpl homeRepositoryImpl = HomeRepositoryImpl();
 
- ////////////////////////////get categories data/////////////////////////
+  ////////////////////////////get categories data/////////////////////////
   List<String> categoriesList = [];
   Future getListOfCategories() async {
     emit(LoadingGetCategoriesList());
@@ -36,7 +36,6 @@ class HomeCubit extends Cubit<HomeState> {
     ImgAssets.slide4
   ];
 
-
 /////////////////////////get products///////////////////////////////
   //get List of products with Limit
   List<Products> limetedProductList = [];
@@ -54,7 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   //get List of all products
   List<Products> allProductsList = [];
-  List<Products> originalAllProductsList = [];
+  List<Products> originalAllProductsList = []; //use it to searchMethod
   Future getAllProductsList() async {
     emit(LoadingGetProductsList());
     try {
@@ -68,14 +67,14 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-
-
   //get products of each category
   Future getProductsOfEachCategory(String categoryName) async {
     emit(LoadingGetProductsList());
     try {
-      allProductsList = await homeRepositoryImpl.getProductsOfEachCategory(categoryName);
-      originalAllProductsList = await homeRepositoryImpl.getProductsOfEachCategory(categoryName);
+      allProductsList =
+          await homeRepositoryImpl.getProductsOfEachCategory(categoryName);
+      originalAllProductsList =
+          await homeRepositoryImpl.getProductsOfEachCategory(categoryName);
       emit(SuccessGetProductsList());
     } on DioError catch (e) {
       print(e.message);
@@ -84,8 +83,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-
-   //////////////////////////////sort method/////////////////////////////
+  //////////////////////////////sort method/////////////////////////////
   //sort list
   static final sortItems = [
     AppStrings.defoult_sort,
@@ -98,9 +96,9 @@ class HomeCubit extends Cubit<HomeState> {
   void changeValueOfDropDownListOfSort(String index) {
     emit(StartChangeSelectNumFromDropDownList());
     selectSortItem = index;
-    if(index == AppStrings.defoult_sort){
+    if (index == AppStrings.defoult_sort) {
       kindSort = 'asc';
-    }else{
+    } else {
       kindSort = 'desc';
     }
 
@@ -108,11 +106,13 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   //get list of products after sort
-   Future getProductsAfterSort(String url,String sortKind) async {
+  Future getProductsAfterSort(String url, String sortKind) async {
     emit(LoadingGetProductsList());
     try {
-      allProductsList = await homeRepositoryImpl.getProductsAfterSort(url,sortKind);
-      originalAllProductsList = await homeRepositoryImpl.getProductsAfterSort(url,sortKind);
+      allProductsList =
+          await homeRepositoryImpl.getProductsAfterSort(url, sortKind);
+      originalAllProductsList =
+          await homeRepositoryImpl.getProductsAfterSort(url, sortKind);
       emit(SuccessGetProductsList());
     } on DioError catch (e) {
       print(e.message);
@@ -142,5 +142,17 @@ class HomeCubit extends Cubit<HomeState> {
     emit(SuccessSearch());
   }
 
- 
+  //////////////////////Get single product data//////////////////////////
+  Products product = Products();
+  Future getSingleProductData(int productId) async {
+    emit(LoadingGetSingleProductData());
+    try {
+      product = await homeRepositoryImpl.getSingleProductData(productId);
+      emit(SuccessGetSingleProductData());
+    } on DioError catch (e) {
+      print(e.message);
+      print(e.error);
+      emit(ErrorToGetSingleProductData());
+    }
+  }
 }
