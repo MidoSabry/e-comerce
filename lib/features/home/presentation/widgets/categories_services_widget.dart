@@ -30,6 +30,7 @@ class CategoryBox extends StatelessWidget {
         ),
         child: Center(
           child: Text(
+            textAlign: TextAlign.center,
             title,
             style: headingTextStyle.copyWith(
                 color: AppColors.whiteColor, fontSize: 16.sp),

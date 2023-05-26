@@ -3,4 +3,5 @@ class EndPoints {
   static const getAllCategories = '/products/categories';
   static const getProducts = '/products';
   static const getProductsOfEachCategory = '/products/category';
+  static const loginPath = '/auth/login';
 }

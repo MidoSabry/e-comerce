@@ -16,3 +16,9 @@ class ChangeVisiablePasswordIconeSuccess extends AuthState {}
 class RemeberMeCheckedState extends AuthState {}
 
 class RemeberMeNotCheckedState extends AuthState {}
+
+class LoadingLoginUser extends AuthState{}
+class SuccessLoginUser extends AuthState{}
+class ErrorToLoginUser extends AuthState{}
+
+

@@ -1,4 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
+import 'package:ecomerce/core/utils/cache_helper.dart';
+import 'package:ecomerce/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -9,6 +12,8 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
+
+  AuthRepositoryImpl authRepositoryImpl = AuthRepositoryImpl();
 
   final String assetImage1 = '$imgPath/onboard1.svg';
   final String assetImage2 = '$imgPath/onboard2.svg';
@@ -24,9 +29,7 @@ class AuthCubit extends Cubit<AuthState> {
     AppStrings.lourphim
   ];
 
-
   ////////////////////////Login screen/////////////////////////////
-  
 
   bool isLoginUserNameError = false;
   bool isLoginPasswordError = false;
@@ -35,11 +38,11 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController loginUserNameController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
 
-  validateUserNameError(String? val){
+  validateUserNameError(String? val) {
     emit(LoadingValidateTextFormField());
-    if(val == ''){
+    if (val == '') {
       isLoginUserNameError = true;
-    }else{
+    } else {
       isLoginUserNameError = false;
     }
     emit(ValidateTextFormField());
@@ -56,13 +59,26 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ValidateTextFormField());
   }
 
-   bool isVisisblePassword = true;
+  bool isVisisblePassword = true;
   void changeVisibiltyPassword() {
     emit(ChangeVisiablePasswordIcone());
     isVisisblePassword = !isVisisblePassword;
     emit(ChangeVisiablePasswordIconeSuccess());
   }
 
+  //get token id (Login)
+  String jwtToken = '';
+  Future loginUser(String userName, String password) async {
+    emit(LoadingLoginUser());
+    try {
+      jwtToken = await authRepositoryImpl.loginUser(userName, password);
+      emit(SuccessLoginUser());
+    } on DioError catch (e) {
+      print(e.message);
+      print(e.error);
+      emit(ErrorToLoginUser());
+    }
+  }
 
   // validateEmailError(String? val) {
   //   emit(LoadingValidateTextFormField());
@@ -81,11 +97,6 @@ class AuthCubit extends Cubit<AuthState> {
   //   emit(ValidateTextFormField());
   // }
 
- 
-
-  
-  
-  
   //Remember me
   bool isRemeber = false;
   bool isChecked = false;

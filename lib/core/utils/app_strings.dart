@@ -43,4 +43,7 @@ class AppStrings {
   static const filter_txt = "Filter";
 
   static const rating = "Rating";
+  static const error_message = "Something went wrong";
+
+  static const userName = "UserName";
 }

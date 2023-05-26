@@ -13,6 +13,7 @@ import '../../../../core/styles/customTextFormStyle.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/assets_manager.dart';
+import '../../../../core/utils/cache_helper.dart';
 import '../../../../core/utils/di.dart';
 import '../cubit/cubit/auth_cubit.dart';
 import '../widgets/custom_separation_widget.dart';
@@ -121,7 +122,7 @@ class LoginScreen extends StatelessWidget {
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
-                              hintText: AppStrings.emailAddress,
+                              hintText: AppStrings.userName,
                               hintStyle: di<AuthCubit>().isLoginUserNameError ==
                                       false
                                   ? hintTextStyle
@@ -244,34 +245,62 @@ class LoginScreen extends StatelessWidget {
                 ),
 
                 Expanded(child: SizedBox()),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20.h),
-                  child: SharedButton(
-                    backgroundColor:
-                        di<AuthCubit>().loginUserNameController.text == '' ||
-                                di<AuthCubit>().loginPasswordController.text ==
-                                    ''
-                            ? AppColors.unActiveButton
-                            : AppColors.primaryColor,
-                    title: AppStrings.login,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate() &&
-                          di<AuthCubit>().isLoginUserNameError == false &&
-                          di<AuthCubit>().isLoginPasswordError == false) {
-                        print("done1");
-                      }
-                      // else {
-                      //   emailController.clear();
-                      //   passwordController.clear();
-                      // }
-                    },
-                    textTitleSize: 18,
-                    textTitleStyle: btnTextStyle,
-                    borderRaduis: 10,
-                    width: 305.w,
-                    height: 50.h,
-                    color: AppColors.whiteColor,
-                  ),
+                BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                    if (state is SuccessLoginUser) {
+                      //save in sharedprefrences
+                      CacheHelper.saveData(
+                          key: "jwt", value: di<AuthCubit>().jwtToken);
+                      Navigator.pushNamed(
+                        context,
+                        Routes.services,
+                      );
+                      di<AuthCubit>().loginPasswordController.text == '';
+                      di<AuthCubit>().loginUserNameController.text == '';
+                    } else if (state is ErrorToLoginUser) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(AppStrings.error_message),
+                      ));
+                    }
+                  },
+                  builder: (context, state) {
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 20.h),
+                      child: SharedButton(
+                        backgroundColor:
+                            //  di<AuthCubit>()
+                            //                 .loginUserNameController
+                            //                 .text ==
+                            //             '' ||
+                            //         di<AuthCubit>().loginPasswordController.text ==
+                            //             ''
+                            //     ? AppColors.unActiveButton
+                            //     :
+                            AppColors.primaryColor,
+                        title: AppStrings.login,
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate() &&
+                              di<AuthCubit>().isLoginUserNameError == false &&
+                              di<AuthCubit>().isLoginPasswordError == false) {
+                            di<AuthCubit>().loginUser(
+                                di<AuthCubit>().loginUserNameController.text,
+                                di<AuthCubit>().loginPasswordController.text);
+                          }
+                          // else {
+                          //   emailController.clear();
+                          //   passwordController.clear();
+                          // }
+                        },
+                        textTitleSize: 18,
+                        textTitleStyle: btnTextStyle,
+                        borderRaduis: 10,
+                        width: 305.w,
+                        height: 50.h,
+                        color: AppColors.whiteColor,
+                      ),
+                    );
+                  },
                 ),
                 Expanded(child: SizedBox()),
                 Row(

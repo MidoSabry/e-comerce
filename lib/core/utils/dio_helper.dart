@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import '../constants/end_points.dart';
@@ -79,13 +81,14 @@ class DioHelper {
   }
 
 //
-  static Future<Response> postDataWithToken(
-      {required String path,
-      required Map<String, dynamic> data,
-      required String tokenid}) async {
-    return await dio.post(path,
-        data: data,
-        options: Options(headers: {"Authorization": "Bearer " + tokenid}));
+  static Future<Response> postData({
+    required String path,
+    required Map<String, dynamic> data,
+  }) async {
+    return await dio.post(
+      path,
+      data: jsonEncode(data),
+    );
   }
 /////////////////put data//////////////////////
   // static Future<Response> putData(

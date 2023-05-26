@@ -1,3 +1,4 @@
+import 'package:ecomerce/core/utils/cache_helper.dart';
 import 'package:ecomerce/features/home/presentation/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -17,20 +18,26 @@ class ServicesScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBarWidget(isHome: false),
-            SizedBox(height: 100.h),
+            Expanded(flex: 1, child: SizedBox()),
             Expanded(
+              flex: 7,
               child: GridView.count(
                 crossAxisCount: 2,
                 children: [
-                  CategoryBox(
-                    title: 'Login',
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        Routes.login,
-                      );
-                    },
-                  ),
+                  CacheHelper.getData(key: "jwt") == null
+                      ? CategoryBox(
+                          title: 'Login',
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              Routes.login,
+                            );
+                          },
+                        )
+                      : CategoryBox(
+                          title: 'Account information',
+                          onPressed: () {},
+                        ),
                   CategoryBox(
                     title: 'Add Product',
                     onPressed: () {},
