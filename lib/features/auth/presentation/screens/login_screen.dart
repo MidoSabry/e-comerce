@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getwidget/components/checkbox/gf_checkbox.dart';
 
-
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/shared/widgets/shared_button.dart';
 import '../../../../core/styles/customTextFormStyle.dart';
@@ -42,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 50.0, bottom: 30),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, Routes.initialRoute);
+                        Navigator.pop(context);
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -109,31 +108,31 @@ class LoginScreen extends StatelessWidget {
                             color: AppColors.whiteColor,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: di<AuthCubit>().isLoginEmailError == false
-                                  ? AppColors.whiteColor
-                                  : AppColors.validateTextColorRed,
+                              color:
+                                  di<AuthCubit>().isLoginUserNameError == false
+                                      ? AppColors.whiteColor
+                                      : AppColors.validateTextColorRed,
                               width: 1,
                             ),
                           ),
                           child: TextFormField(
-                            controller: di<AuthCubit>().emailLoginController,
+                            controller: di<AuthCubit>().loginUserNameController,
                             textAlign: TextAlign.start,
-                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               hintText: AppStrings.emailAddress,
-                              hintStyle: di<AuthCubit>().isLoginEmailError ==
+                              hintStyle: di<AuthCubit>().isLoginUserNameError ==
                                       false
                                   ? hintTextStyle
-                                  : TextStyle(
+                                  : const TextStyle(
                                       color: AppColors.validateTextColorRed),
                             ),
                             validator: (val) {
-                              di<AuthCubit>().validateEmailError(val);
+                              di<AuthCubit>().validateUserNameError(val);
                             },
                             onChanged: (val) {
-                              di<AuthCubit>().isLoginEmailError = false;
+                              di<AuthCubit>().isLoginUserNameError = false;
                             },
                           ),
                         ),
@@ -162,7 +161,7 @@ class LoginScreen extends StatelessWidget {
                             child: Center(
                               child: TextFormField(
                                 controller:
-                                    di<AuthCubit>().passwordLoginController,
+                                    di<AuthCubit>().loginPasswordController,
                                 keyboardType: TextInputType.visiblePassword,
                                 textAlign: TextAlign.start,
                                 obscureText: di<AuthCubit>().isVisisblePassword,
@@ -173,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                                                 .isLoginPasswordError ==
                                             false
                                         ? hintTextStyle
-                                        : TextStyle(
+                                        : const TextStyle(
                                             color:
                                                 AppColors.validateTextColorRed),
                                     suffixIcon: IconButton(
@@ -205,8 +204,8 @@ class LoginScreen extends StatelessWidget {
                         //   height: getProportionateScreenHeight(9),
                         // ),
                         Visibility(
-                            visible: di<AuthCubit>().isLoginEmailError ||
-                                di<AuthCubit>().isLoginEmailError,
+                            visible: di<AuthCubit>().isLoginUserNameError ||
+                                di<AuthCubit>().isLoginPasswordError,
                             child: Text(
                               AppStrings.invalidEmailOrPassword,
                               style: validateTextStyle,
@@ -235,7 +234,7 @@ class LoginScreen extends StatelessWidget {
                       child: Text(AppStrings.rememberMe, style: hintTextStyle),
                     ),
                     TextButton(
-                        onPressed: () async {},
+                        onPressed: () {},
                         child: Text(
                           AppStrings.forgotPassword,
                           style: TextBlackStyle.copyWith(
@@ -249,16 +248,18 @@ class LoginScreen extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: 20.h),
                   child: SharedButton(
                     backgroundColor:
-                        di<AuthCubit>().emailLoginController.text == '' ||
-                                di<AuthCubit>().passwordLoginController.text ==
+                        di<AuthCubit>().loginUserNameController.text == '' ||
+                                di<AuthCubit>().loginPasswordController.text ==
                                     ''
                             ? AppColors.unActiveButton
                             : AppColors.primaryColor,
                     title: AppStrings.login,
                     onPressed: () async {
                       if (_formKey.currentState!.validate() &&
-                          di<AuthCubit>().isLoginEmailError == false &&
-                          di<AuthCubit>().isLoginPasswordError == false) {}
+                          di<AuthCubit>().isLoginUserNameError == false &&
+                          di<AuthCubit>().isLoginPasswordError == false) {
+                        print("done1");
+                      }
                       // else {
                       //   emailController.clear();
                       //   passwordController.clear();

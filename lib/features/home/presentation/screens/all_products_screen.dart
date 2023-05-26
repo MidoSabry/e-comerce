@@ -28,7 +28,7 @@ class AllProductsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppBarWidget(),
+            CustomAppBarWidget(isHome: false),
             SortAndFilterWidget(
                 url: nameOfScreen == 'All products'
                     ? EndPoints.getProducts

@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             margin: EdgeInsets.only(bottom: 50.h),
             child: Column(
               children: [
-                CustomAppBarWidget(),
+                CustomAppBarWidget(isHome: true),
                 SizedBox(
                   height: 20.h,
                 ),

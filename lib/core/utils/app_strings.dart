@@ -17,7 +17,7 @@ class AppStrings {
       'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
 
   static const loginMessage =
-      "Login to your account and let's get your daily activites done!";
+      "Login to your account and let's share our products";
   static const String emailAddress = 'Email Address';
   static const String password = 'Password';
   static const String confirmPassword = 'Confirm password';

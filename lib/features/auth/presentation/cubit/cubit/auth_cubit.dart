@@ -24,51 +24,31 @@ class AuthCubit extends Cubit<AuthState> {
     AppStrings.lourphim
   ];
 
-  bool isLoginEmailError = false;
+
+  ////////////////////////Login screen/////////////////////////////
+  
+
+  bool isLoginUserNameError = false;
   bool isLoginPasswordError = false;
-  String emailMsgError = '';
+  String loginErrorMsg = 'Invalid userName or password';
 
-  TextEditingController emailLoginController = TextEditingController();
-  TextEditingController passwordLoginController = TextEditingController();
+  TextEditingController loginUserNameController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
 
-  validateEmailError(String? val) {
+  validateUserNameError(String? val){
     emit(LoadingValidateTextFormField());
-    if (val == '') {
-      isLoginEmailError = true;
-      emailMsgError = 'Email is empty';
-    } else if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(val!)) {
-      isLoginEmailError = true;
-      emailMsgError = 'Email is wrong';
-    } else {
-      isLoginEmailError = false;
+    if(val == ''){
+      isLoginUserNameError = true;
+    }else{
+      isLoginUserNameError = false;
     }
-
     emit(ValidateTextFormField());
   }
 
-  bool isVisisblePassword = true;
-  void changeVisibiltyPassword() {
-    emit(ChangeVisiablePasswordIcone());
-    isVisisblePassword = !isVisisblePassword;
-    emit(ChangeVisiablePasswordIconeSuccess());
-  }
-
-  
-  String passMsgError = '';
-  String confirmPassMsgError = '';
   validatePasswordError(String? val) {
     emit(LoadingValidateTextFormField());
     if (val == '') {
       isLoginPasswordError = true;
-      passMsgError = 'password is empty';
-    } else if (!RegExp(r'^(?=.*)(?=.*?[a-z])(?=.*?[0-9])(?=.).{8,}$'
-            // r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'
-            )
-        .hasMatch(val!)) {
-      isLoginPasswordError = true;
-      passMsgError = 'password is wrong';
     } else {
       isLoginPasswordError = false;
     }
@@ -76,6 +56,36 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ValidateTextFormField());
   }
 
+   bool isVisisblePassword = true;
+  void changeVisibiltyPassword() {
+    emit(ChangeVisiablePasswordIcone());
+    isVisisblePassword = !isVisisblePassword;
+    emit(ChangeVisiablePasswordIconeSuccess());
+  }
+
+
+  // validateEmailError(String? val) {
+  //   emit(LoadingValidateTextFormField());
+  //   if (val == '') {
+  //     isLoginEmailError = true;
+  //     emailMsgError = 'Email is empty';
+  //   } else if (!RegExp(
+  //           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+  //       .hasMatch(val!)) {
+  //     isLoginEmailError = true;
+  //     emailMsgError = 'Email is wrong';
+  //   } else {
+  //     isLoginEmailError = false;
+  //   }
+
+  //   emit(ValidateTextFormField());
+  // }
+
+ 
+
+  
+  
+  
   //Remember me
   bool isRemeber = false;
   bool isChecked = false;
