@@ -40,7 +40,12 @@ class ServicesScreen extends StatelessWidget {
                         ),
                   CategoryBox(
                     title: 'Add Product',
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.createNewProduct,
+                      );
+                    },
                   ),
                   CategoryBox(
                     title: 'Category 3',

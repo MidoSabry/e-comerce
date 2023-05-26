@@ -46,4 +46,21 @@ class AppStrings {
   static const error_message = "Something went wrong";
 
   static const userName = "UserName";
+
+  static const String product_picture = 'Product Picture';
+  static const String usePdf = 'use pdf,jpeg,jpg or png';
+  static const String youMustUploadPhoto = 'you must upload a product photo';
+
+  static const String noImageSelect = 'No Image Selected!';
+  static const String noImageCapture = 'No Image Captured!';
+  static const String uploadBtn = 'Upload';
+  static const String cameraBtn = 'Camera';
+
+  static const String productTitle = 'Product title';
+  static const String productPrice = 'Product price';
+  static const String selectCategory = 'Select Category';
+  static const String shortDescription =
+      'Enter short description of this product here ..';
+
+  static const String addProduct = 'Add Product';
 }

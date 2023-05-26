@@ -1,3 +1,4 @@
+import 'package:ecomerce/features/product/presentation/cubit/cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -22,9 +23,11 @@ class MyApp extends StatelessWidget {
           create: (context) => di<AuthCubit>(),
         ),
         BlocProvider<HomeCubit>(
-          create: (context) => di<HomeCubit>()
-            ..getListOfCategories()
-            ..getProductsListWithLimit()
+            create: (context) => di<HomeCubit>()
+              ..getListOfCategories()
+              ..getProductsListWithLimit()),
+        BlocProvider<ProductCubit>(
+          create: (context) => di<ProductCubit>(),
         ),
       ],
       child: MaterialApp(

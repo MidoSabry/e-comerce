@@ -134,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     } else {
                       return SizedBox(
-                        height: 300.h,
+                        height: MediaQuery.of(context).size.height / 2.h,
                         child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
