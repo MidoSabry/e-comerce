@@ -7,6 +7,7 @@ import 'package:meta/meta.dart';
 
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/assets_manager.dart';
+import '../../../data/model/user_model.dart';
 
 part 'auth_state.dart';
 
@@ -110,5 +111,27 @@ class AuthCubit extends Cubit<AuthState> {
       isRemeber = true;
       emit(RemeberMeCheckedState());
     }
+  }
+
+  //////////////////////get user data//////////////////////
+  User user = User();
+  Future getUserData(int userId) async {
+    emit(LoadingGetUserData());
+    try {
+      user = await authRepositoryImpl.getUserData(userId);
+      emit(SuccessGetUserData());
+    } on DioError catch (e) {
+      print(e.message);
+      print(e.error);
+      emit(ErrorToGetUserData());
+    }
+  }
+
+  ////////////////////Logout User/////////////////
+  logoutUser() {
+    emit(LoadingLoginUser());
+    print("hee");
+    CacheHelper.removeData(key: "jwt");
+    emit(SuccessLogoutUser());
   }
 }

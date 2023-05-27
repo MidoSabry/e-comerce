@@ -1,3 +1,4 @@
+import 'package:ecomerce/features/auth/presentation/screens/account_information.dart';
 import 'package:ecomerce/features/home/data/repositories/models/products.dart';
 import 'package:ecomerce/features/home/presentation/screens/all_products_screen.dart';
 import 'package:ecomerce/features/home/presentation/screens/home_screen.dart';
@@ -22,6 +23,7 @@ class Routes {
   static const String services = '/services';
   static const String mySingleProduct = '/mySingleProduct';
   static const String myProducts = '/myProducts';
+  static const String accountInformation = '/accountInformation';
 }
 
 class AppRoutes {
@@ -73,6 +75,11 @@ class AppRoutes {
       case Routes.myProducts:
         return MaterialPageRoute(builder: (context) {
           return MyProducts();
+        });
+         case Routes.accountInformation:
+        return MaterialPageRoute(builder: (context) {
+          var productId = routeSettings.arguments as int;
+          return AccountInformation(userId: productId);
         });
     }
   }

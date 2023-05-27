@@ -64,4 +64,19 @@ class AppStrings {
 
   static const String addProduct = 'Add Product';
   static const String updateProduct = 'Update product';
+
+  static const String accountInformation = 'Account Information';
+  static const String addressInformation = 'Address Information';
+  static const String phone = 'Phone';
+  static const String city = 'City';
+  static const String street = 'Street';
+  static const String number = 'Number';
+  static const String zip = 'Zip Code';
+  static const String logout = 'Logout';
+
+  static const String areYouSureLogout = 'Are you sure you want to Logout?';
+  static const String no_txt = 'No';
+  static const String yes_txt = 'Yes';
+
+ 
 }

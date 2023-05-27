@@ -21,4 +21,11 @@ class LoadingLoginUser extends AuthState{}
 class SuccessLoginUser extends AuthState{}
 class ErrorToLoginUser extends AuthState{}
 
+class LoadingGetUserData extends AuthState{}
+class SuccessGetUserData extends AuthState{}
+class ErrorToGetUserData extends AuthState{}
+
+class LoadingLogoutUser extends AuthState{}
+class SuccessLogoutUser extends AuthState{}
+
 
