@@ -95,4 +95,40 @@ class ProductCubit extends Cubit<ProductState> {
 
   }
 
+  ///////////////////////update product //////////////////////////
+   Future updateProduct(SingleProduct singleProduct,int productId)async{
+    emit(LoadingAddProduct());
+    print("hhhhh");
+    print(singleProduct.title);
+    print(singleProduct.category);
+    print(singleProduct.description);
+    print(singleProduct.price);
+    print(singleProduct.image);
+    try {
+      await productRepositoryImpl.updateSingleProduct(singleProduct,productId);
+      emit(SuccessAddProduct());
+    } on DioError catch (e) {
+      print(e.message);
+      print(e.error);
+      emit(ErrorToAddProduct());
+    }
+
+  }
+
+
+
+  //////////////////////delete product///////////////////////////////
+ Future deleteProduct(int? productId)async{
+    emit(LoadingDeleteProduct());
+    try {
+      await productRepositoryImpl.deleteSingleProduct(productId!);
+      emit(SuccessDeleteProduct());
+    } on DioError catch (e) {
+      print(e.message);
+      print(e.error);
+      emit(ErrorToDeleteProduct());
+    }
+
+  }
+
 }

@@ -63,4 +63,5 @@ class AppStrings {
       'Enter short description of this product here ..';
 
   static const String addProduct = 'Add Product';
+  static const String updateProduct = 'Update product';
 }

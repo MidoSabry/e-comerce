@@ -72,10 +72,14 @@ class ProductPhotoWidget extends StatelessWidget {
                         horizontal: 12, vertical: 15),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: Image.file(
-                        File(di<ProductCubit>().selectedImagePath),
-                        fit: BoxFit.cover,
-                      ),
+                      child: di<ProductCubit>()
+                              .selectedImagePath
+                              .startsWith('https:')
+                          ? Image.network(di<ProductCubit>().selectedImagePath)
+                          : Image.file(
+                              File(di<ProductCubit>().selectedImagePath),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ));
       },

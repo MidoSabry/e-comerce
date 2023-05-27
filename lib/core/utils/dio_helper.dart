@@ -116,4 +116,35 @@ class DioHelper {
         data: data,
         options: Options(headers: {"Authorization": "Bearer " + tokenid}));
   }
+
+  static Future<Response> putDataWithoutToken({
+    required String path,
+    Map<String, dynamic>? data,
+  }) async {
+    return await dio.put(
+      path,
+      data: data,
+    );
+  }
+
+  /////////////////delete data////////////
+  static Future<Response> deleteData({
+    required String path,
+    Map<String, dynamic>? data,
+    required String tokenid,
+  }) async {
+    return await dio.delete(path,
+        data: data,
+        options: Options(headers: {"Authorization": "Bearer " + tokenid}));
+  }
+
+  static Future<Response> deleteDataWithoutToken({
+    required String path,
+    Map<String, dynamic>? data,
+  }) async {
+    return await dio.delete(
+      path,
+      data: data,
+    );
+  }
 }
