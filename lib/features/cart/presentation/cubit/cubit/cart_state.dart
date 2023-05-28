@@ -22,3 +22,7 @@ class SuccessDeleteProductFromCart extends CartState{}
 class LoadingEditProductFromCart extends CartState{}
 class SuccessEditProductFromCart extends CartState{}
 
+class LoadingUploadProductToCart extends CartState{}
+class SuccessUploadProductToCart extends CartState{}
+class ErrorToUploadProductToCart extends CartState{}
+

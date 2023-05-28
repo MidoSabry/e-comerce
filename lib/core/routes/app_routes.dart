@@ -10,7 +10,6 @@ import 'package:ecomerce/features/product/presentation/screens/my_products_scree
 import 'package:flutter/material.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/auth/presentation/screens/onboarding_pageview.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 
 class Routes {
@@ -32,11 +31,7 @@ class AppRoutes {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case Routes.onboarding:
-        return MaterialPageRoute(builder: (context) {
-          return OnboardingScreen();
-        });
-
+     
       // case Routes.initialRoute:
       //   return MaterialPageRoute(builder: (context) {
       //     return StorageService.getUserToken().isNotEmpty

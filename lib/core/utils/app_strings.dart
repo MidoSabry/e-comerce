@@ -82,10 +82,13 @@ class AppStrings {
   static const String addToCart = 'Add To Cart';
   static const String addQuantityYouWant = 'Add number of quantity that you want';
   static const String this_product_already_in_cart = 'This product is already in your cart';
+  static const String should_enter_quantity = 'You should enter quantity';
 
 
   static const String delete = 'Delete';
   static const String edit = 'Edit';
+
+  static const String successUploadProductToCart = "Success Uploading your products in cart";
 
  
 }

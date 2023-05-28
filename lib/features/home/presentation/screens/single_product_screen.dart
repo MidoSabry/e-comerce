@@ -140,15 +140,23 @@ class SingleProductScreen extends StatelessWidget {
                                                   TextButton(
                                                     child: Text('OK'),
                                                     onPressed: () {
-                                                      di<CartCubit>().addProductToCart(AddToCart(
-                                                          productId: productId,
-                                                          ProductQuantity:
-                                                              int.parse(di<
-                                                                      CartCubit>()
-                                                                  .quantityController
-                                                                  .text
-                                                                  .toString())));
-                                                      Navigator.pop(context);
+                                                      if (di<CartCubit>()
+                                                          .quantityController
+                                                          .text
+                                                          .isEmpty) {
+                                                        openDialogForEmptyQuantity(
+                                                            context);
+                                                      } else {
+                                                        di<CartCubit>().addProductToCart(AddToCart(
+                                                            productId:
+                                                                productId,
+                                                            ProductQuantity: int.parse(di<
+                                                                    CartCubit>()
+                                                                .quantityController
+                                                                .text
+                                                                .toString())));
+                                                        Navigator.pop(context);
+                                                      }
                                                     },
                                                   ),
                                                 ],
@@ -186,6 +194,20 @@ class SingleProductScreen extends StatelessWidget {
           width: 30.w,
           child: Text(
             AppStrings.this_product_already_in_cart,
+            style: subHeadingTextStyle,
+          ),
+        )),
+      );
+
+  Future openDialogForEmptyQuantity(BuildContext context) => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+            // title: Text(AppStrings.done_add_to_card.tr()),
+            content: Container(
+          height: 60.h,
+          width: 30.w,
+          child: Text(
+            AppStrings.should_enter_quantity,
             style: subHeadingTextStyle,
           ),
         )),

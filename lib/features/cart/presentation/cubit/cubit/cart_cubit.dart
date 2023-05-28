@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:ecomerce/core/utils/cache_helper.dart';
 import 'package:ecomerce/features/cart/data/model/add_cart_model.dart';
 import 'package:ecomerce/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:ecomerce/features/home/data/repositories/home_repository_impl.dart';
@@ -90,14 +91,36 @@ class CartCubit extends Cubit<CartState> {
 
   TextEditingController quantityController = TextEditingController();
 
+  ///////////////////get data from shared prefrences////////////////
+  getCartDataFromSharedPref() {
+    if (CacheHelper.getData(key: "productsInCart") != null) {
+      String ListOfCartDataAsSting = CacheHelper.getData(key: "productsInCart");
+      productsInCart = (jsonDecode(ListOfCartDataAsSting) as List<dynamic>)
+          .map((e) => AddToCart.fromJson(e))
+          .toList();
+      getAllDataInCart();
+    } 
+  }
+
+  addCartDataFromSharedPref(List<AddToCart> addToCartData) {
+    String ListOfProductsInCartToSave = jsonEncode(productsInCart);
+    CacheHelper.saveData(
+        key: "productsInCart", value: ListOfProductsInCartToSave);
+    getCartDataFromSharedPref();
+    getAllDataInCart();
+  }
+
+  //////////////add data to cart//////////////////////////
+
   addProductToCart(AddToCart addToCart) {
     emit(LoadingAddProductToCart());
+    getCartDataFromSharedPref();
     productsInCart.add(addToCart);
-    getAllDataInCart();
+    addCartDataFromSharedPref(productsInCart);
     emit(SuccessAddProductToCart());
   }
 
-  //////////////////get all data in cart///////////////
+  //////////////////get all data in cart from api///////////////
   List<Products> myAllCartProducts = [];
   Products product = Products();
 
@@ -113,24 +136,59 @@ class CartCubit extends Cubit<CartState> {
       }
     });
 
-    print(myAllCartProducts);
+    // print("gettt");
+    // print(myAllCartProducts);
     emit(SuccessGetAllMyCarts());
   }
 
   /////////////////delete specific cart///////////////
-  deleteSpecificItem(int index) {
+  deleteSpecificItem(int productId) {
     emit(LoadingDeleteProductFromCart());
-    myAllCartProducts.removeAt(index);
-    productsInCart.removeAt(index);
+
+    getCartDataFromSharedPref();
+
+    myAllCartProducts.removeWhere((element) => element.id == productId);
+    productsInCart.removeWhere((element) => element.productId == productId);
+    addCartDataFromSharedPref(productsInCart);
     emit(SuccessDeleteProductFromCart());
   }
 
   ///////////////////Edit specific cart///////////////
   TextEditingController editQuantityController = TextEditingController();
-  editSpecificItem(int index) {
+  editSpecificItem(int productId) {
     emit(LoadingEditProductFromCart());
-    productsInCart[index].ProductQuantity =
-        int.parse(editQuantityController.text.toString());
+    getCartDataFromSharedPref();
+    // productsInCart[index].ProductQuantity =
+    //     int.parse(editQuantityController.text.toString());
+    productsInCart.forEach((element) {
+      if (element.productId == productId) {
+        element.ProductQuantity =
+            int.parse(editQuantityController.text.toString());
+      }
+    });
+    String ListOfProductsInCartToSave = jsonEncode(productsInCart);
+    CacheHelper.saveData(
+        key: "productsInCart", value: ListOfProductsInCartToSave);
+    // print(productsInCart[index].ProductQuantity);
     emit(SuccessEditProductFromCart());
+  }
+
+  //////////////////add to cart api//////////////////////
+  Future uploadProductToCartAPI() async {
+    emit(LoadingUploadProductToCart());
+    try {
+      DateTime now = DateTime.now();
+      String formattedDate =
+          "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+      print(formattedDate);
+      getCartDataFromSharedPref();
+      await cartRepositoryImp.addProductToCart(
+          1, formattedDate, productsInCart);
+      emit(SuccessUploadProductToCart());
+    } on DioError catch (e) {
+      print(e.message);
+      print(e.error);
+      emit(ErrorToUploadProductToCart());
+    }
   }
 }

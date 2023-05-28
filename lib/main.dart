@@ -12,7 +12,7 @@ void main() async {
   runApp(
     ScreenUtilInit(
       builder: (child, context) =>
-          DevicePreview(enabled: true, builder: (context) => const MyApp()),
+          DevicePreview(enabled: false, builder: (context) => const MyApp()),
       //DevicePreview(enabled: true,fbuilder: (context) => const MyApp()),
       designSize: const Size(360, 690),
       minTextAdapt: true,

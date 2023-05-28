@@ -6,4 +6,5 @@ class EndPoints {
   static const loginPath = '/auth/login';
   static const users = '/users';
   static const userCart = '/carts/user';
+  static const cart = "/carts";
 }

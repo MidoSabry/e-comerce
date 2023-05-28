@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           create: (context) => di<ProductCubit>(),
         ),
         BlocProvider<CartCubit>(
-          create: (context) => di<CartCubit>(),
+          create: (context) => di<CartCubit>()..getCartDataFromSharedPref(),
         ),
       ],
       child: MaterialApp(
