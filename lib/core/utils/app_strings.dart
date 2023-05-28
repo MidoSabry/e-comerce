@@ -78,5 +78,14 @@ class AppStrings {
   static const String no_txt = 'No';
   static const String yes_txt = 'Yes';
 
+  static const String myAllPreviousCart = 'My All Previous Cart';
+  static const String addToCart = 'Add To Cart';
+  static const String addQuantityYouWant = 'Add number of quantity that you want';
+  static const String this_product_already_in_cart = 'This product is already in your cart';
+
+
+  static const String delete = 'Delete';
+  static const String edit = 'Edit';
+
  
 }

@@ -1,3 +1,4 @@
+import 'package:ecomerce/features/cart/presentation/cubit/cubit/cart_cubit.dart';
 import 'package:ecomerce/features/product/presentation/cubit/cubit/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
               ..getProductsListWithLimit()),
         BlocProvider<ProductCubit>(
           create: (context) => di<ProductCubit>(),
+        ),
+        BlocProvider<CartCubit>(
+          create: (context) => di<CartCubit>(),
         ),
       ],
       child: MaterialApp(

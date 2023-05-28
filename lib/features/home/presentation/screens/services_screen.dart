@@ -27,7 +27,7 @@ class ServicesScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 return Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: [
@@ -59,8 +59,13 @@ class ServicesScreen extends StatelessWidget {
                         },
                       ),
                       // CategoryBox(
-                      //   title: 'Category 3',
-                      //   onPressed: () {},
+                      //   title: 'My Carts',
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(
+                      //       context,
+                      //       Routes.myAllCartScreens,
+                      //     );
+                      //   },
                       // ),
                       // CategoryBox(
                       //   title: 'Category 4',

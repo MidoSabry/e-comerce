@@ -1,4 +1,5 @@
 import 'package:ecomerce/features/auth/presentation/screens/account_information.dart';
+import 'package:ecomerce/features/cart/presentation/screens/my_all_carts.dart';
 import 'package:ecomerce/features/home/data/repositories/models/products.dart';
 import 'package:ecomerce/features/home/presentation/screens/all_products_screen.dart';
 import 'package:ecomerce/features/home/presentation/screens/home_screen.dart';
@@ -24,6 +25,7 @@ class Routes {
   static const String mySingleProduct = '/mySingleProduct';
   static const String myProducts = '/myProducts';
   static const String accountInformation = '/accountInformation';
+  static const String myAllCartScreens = '/myAllCartScreens';
 }
 
 class AppRoutes {
@@ -80,6 +82,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) {
           var productId = routeSettings.arguments as int;
           return AccountInformation(userId: productId);
+        });
+         case Routes.myAllCartScreens:
+        return MaterialPageRoute(builder: (context) {
+          return MyAllCarts();
         });
     }
   }

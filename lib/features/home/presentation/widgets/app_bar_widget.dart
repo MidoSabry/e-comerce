@@ -1,13 +1,18 @@
+import 'package:ecomerce/core/styles/customTextFormStyle.dart';
+import 'package:ecomerce/features/cart/presentation/cubit/cubit/cart_cubit.dart';
 import 'package:ecomerce/features/home/presentation/cubit/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/shared/widgets/custom_title.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/di.dart';
+import 'package:badges/badges.dart' as Badges;
 
 class CustomAppBarWidget extends StatelessWidget {
   CustomAppBarWidget({super.key, required this.isHome});
@@ -87,15 +92,44 @@ class CustomAppBarWidget extends StatelessWidget {
                 di<HomeCubit>().productsSearch(index);
               }),
         ),
-        Container(
-            padding: EdgeInsets.only(top: 20),
-            child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.shopping_cart,
-                  color: AppColors.primaryColor,
-                  size: 30.sp,
-                ))),
+        BlocConsumer<CartCubit, CartState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            return Container(
+                padding: EdgeInsets.only(top: 20),
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routes.myAllCartScreens,
+                      );
+                    },
+                    icon: di<CartCubit>().productsInCart.length == 0
+                        ? Icon(
+                            Icons.shopping_cart,
+                            color: AppColors.primaryColor,
+                            size: 30.sp,
+                          )
+                        : Badges.Badge(
+                            position: Badges.BadgePosition.topEnd(),
+                            badgeContent: DefaultTitle(
+                              text: di<CartCubit>()
+                                  .productsInCart
+                                  .length
+                                  .toString(),
+                              style: subHeadingTextStyle.copyWith(
+                                  color: AppColors.whiteColor),
+                            ),
+                            child: Icon(
+                              Icons.shopping_cart,
+                              color: AppColors.primaryColor,
+                              size: 30.sp,
+                            ),
+                          )));
+          },
+        ),
       ],
     );
   }
